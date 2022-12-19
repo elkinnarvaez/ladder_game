@@ -50,7 +50,7 @@ def start_game(game):
         print("Jugador avanza a la casilla {0}".format(
             players[current_player].cell))
 
-        # Check cell of player
+        # Check final cell
         if players[current_player].cell == game.final_cell:
             winner = True
         elif players[current_player].cell > game.final_cell:
@@ -97,7 +97,7 @@ def main():
     clear()
     valid = False
     while (not valid):
-        print("Bienvendio al Juuego de la Escalera")
+        print("Bienvendio al Juego de las Serpientes y Escaleras")
         print("1. Iniciar Juego")
         print("2. Ayuda")
         print("3. Salir")
@@ -125,8 +125,8 @@ def main():
                 elif (option == 2):
                     help()
                 else:
-                    valid = True
                     print("Gracias por jugar!")
+                    valid = True
         except Exception as err:
             print(err)
             print(

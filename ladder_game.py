@@ -13,21 +13,70 @@ class Player:
         return self.dice
 
 
+class Game:
+    def __init__(self, num_rows=5, num_columns=5, num_players=1):
+        self.num_rows = num_rows
+        self.num_columns = num_columns
+        self.num_players = num_players
+        self.final_cell = self.num_rows * self.num_columns
+        self.ladders = {3: 11, 6: 17, 9: 18, 10: 12}
+        self.snakes = {14: 4, 19: 8, 22: 20, 24: 16}
+
+    def assing_ladders_and_snakes_randomly(self):
+        """Not implemented"""
+        """This method will assign ladders and snakes randomly according to the dimensions of the board"""
+        pass
+
+
 def clear():
     if (os.name == 'posix'):
         return os.system('clear')
 
 
-def start_game(ladders, snakes, num_players, goal):
-    clear()
-    players = [Player() for _ in range(num_players)]
-    current_player = 0
-    winner = False
+def start_game(game):
+    players = [Player() for _ in range(game.num_players)]
+    current_player, winner = 0, False
     while (not winner):
+        clear()
+
+        # Start turn
         print("Es el turno del jugador #{0}".format(current_player + 1))
-        print("Presion cualquier tecla tirar el dado...")
-        players[current_player].roll_dice()
-        current_player = (current_player + 1) % num_players
+        input("Presione cualquier tecla tirar el dado...")
+
+        # Roll dice and move
+        dice = players[current_player].roll_dice()
+        print("El dado ha arrojado el valor {0}".format(dice))
+        players[current_player].cell = players[current_player].cell + dice
+        print("Jugador avanza a la casilla {0}".format(
+            players[current_player].cell))
+
+        # Check cell of player
+        if players[current_player].cell == game.final_cell:
+            winner = True
+        elif players[current_player].cell > game.final_cell:
+            players[current_player].cell = game.final_cell - \
+                (players[current_player].cell - game.final_cell)
+            print("El jugador retrocede a la casilla {0}".format(
+                players[current_player].cell))
+
+        # Player ascends by ladder
+        if players[current_player].cell in game.ladders:
+            players[current_player].cell = game.ladders[players[current_player].cell]
+            print("El jugador avanza por la escalera al cuadro {0}".format(
+                players[current_player].cell))
+
+        # Player descends by snake
+        if players[current_player].cell in game.snakes:
+            players[current_player].cell = game.snakes[players[current_player].cell]
+            print("El jugador desciende por la serpiente al cuadro {0}".format(
+                players[current_player].cell))
+
+        # End turn
+        if winner:
+            print("Has ganado el juego.")
+        else:
+            input("Presione cualquier tecla terminar turno...")
+            current_player = (current_player + 1) % game.num_players
 
 
 def help():
@@ -59,22 +108,29 @@ def main():
             if (option <= 0 or option > 3):
                 raise Exception("Opción por fuera de los límites.")
             else:
-                valid = True
                 if (option == 1):
-                    num_rows, num_columns = 5, 5
-                    num_players = 2
-                    ladders = {3: 11, 6: 17, 9: 18, 10: 12}
-                    snakes = {14: 4, 19: 8, 22: 20, 24: 16}
-                    start_game(ladders, snakes, num_players,
-                               num_rows*num_columns)
+                    # Board dimensions
+                    num_rows = 5
+                    num_columns = 5
+
+                    # Num of players
+                    num_players = int(
+                        input("Seleccione el número de jugadores: "))
+                    if (num_players <= 0):
+                        raise Exception("Número de jugadores inválido")
+
+                    game = Game(num_rows, num_columns, num_players)
+                    start_game(game)
+                    valid = True
                 elif (option == 2):
                     help()
-                    valid = False
                 else:
+                    valid = True
                     print("Gracias por jugar!")
         except Exception as err:
             print(err)
-            print("Por favor ingrese una opción correcta.")
+            print(
+                "Los valores ingresados fueron inválidos, por favor vuelva a intentarlo.")
             print()
 
 

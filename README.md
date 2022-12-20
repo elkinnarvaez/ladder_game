@@ -1,5 +1,7 @@
 # Snakes and Ladders
 
+**IMPORTANT** - This program is interactive, so it requires the interaction of an user when executed.
+
 ## Dependencies
 
 - Python 3.x. Instructions for installation can be found [here](https://www.python.org/downloads/).
@@ -23,7 +25,5 @@ In order to run this program please follow the steps bellow.
 3. Run the following command in your terminal:
 
    ```
-   python merge_sort.py
+   python snakes_and_ladders.py
    ```
-
-**IMPORTANT** - This game is interactive, so it requires the interaction of an user when it is executed.

@@ -23,9 +23,8 @@ class Game:
         self.snakes = {14: 4, 19: 8, 22: 20, 24: 16}
 
     def assing_ladders_and_snakes_randomly(self):
-        """Not implemented"""
-        """This method will assign ladders and snakes randomly according to the dimensions of the board"""
-        pass
+        """This method assigns ladders and snakes randomly according to the dimensions of the board"""
+        return NotImplemented
 
 
 def clear():
@@ -82,7 +81,7 @@ def start_game(game):
 def help():
     clear()
     print("Reglas del juego:")
-    print("1.  El tablero tiene 25 cuadros, y el objetivo es llegar o superar el cuadro 25.")
+    print("1. El tablero tiene 25 cuadros, y el objetivo es llegar o superar el cuadro 25.")
     print("2. El cuadro inicial es el 0, el cual se encuentra por fuera del tablero a la izquierda del cuadro 1.")
     print("3. En cada turno usted tira un dado de 6 lados y mueve el número de cuadrados siguiendo la línea punteada de la imagen.")
     print("4. Si su turno termina en la parte inferior de una escalera, sube por la escalera.")
@@ -110,6 +109,8 @@ def main():
             else:
                 if (option == 1):
                     # Board dimensions
+                    # NOTE: the board dimensions can be safely modified (or added as user input) as long as the
+                    #       assing_ladders_and_snakes_randomly method is implemented inside of the Game class.
                     num_rows = 5
                     num_columns = 5
 
